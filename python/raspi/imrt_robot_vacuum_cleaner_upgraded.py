@@ -150,6 +150,8 @@ while not motor_serial.shutdown_now :
 
         drive_robot(BACKWARDS, 0.5)
 
+        turn_robot_right()
+
     else:
         # If there is nothing in front of the robot it continus driving forwards
         drive_robot(FORWARDS, 0.1)

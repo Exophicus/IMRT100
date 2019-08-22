@@ -96,11 +96,11 @@ while not motor_serial.shutdown_now :
 
 
     # Get and print readings from distance sensors
-    dist_1 = motor_serial.get_dist_1()
+    dist_left = motor_serial.get_dist_left()
     dist_2 = motor_serial.get_dist_2()
     dist_3 = motor_serial.get_dist_3()
     dist_4 = motor_serial.get_dist_4()
-    print("Dist 1:", dist_1, "   Dist 2:", dist_2, "   Dist 3:", dist_3, "   Dist 4:", dist_4)
+    print("Dist left:", dist_left, "   Dist 2:", dist_2, "   Dist 3:", dist_3, "   Dist 4:", dist_4)
 
     # Check if there is an obstacle in the way
     if dist_1 < STOP_DISTANCE or dist_2 < STOP_DISTANCE or dist_3 < STOP_DISTANCE or dist_4 < STOP_DISTANCE:
