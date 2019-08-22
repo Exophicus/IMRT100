@@ -110,7 +110,7 @@ while not motor_serial.shutdown_now :
 
 
 
-
+    # HAVE TO CHANGE TWO OF THE SENSORS, THE FRONT ONE AND THE RIGHT ONE
 
 
     # Get and print readings from distance sensors
@@ -151,6 +151,7 @@ while not motor_serial.shutdown_now :
         drive_robot(BACKWARDS, 0.5)
 
         turn_robot_right()
+
 
     else:
         # If there is nothing in front of the robot it continus driving forwards
