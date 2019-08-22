@@ -114,11 +114,11 @@ while not motor_serial.shutdown_now :
 
 
     # Get and print readings from distance sensors
-    dist_venstre = motor_serial.get_dist_venstre()
-    dist_bak = motor_serial.get_dist_bak()
-    dist_hoyre = motor_serial.get_dist_hoyre()
-    dist_frem = motor_serial.get_dist_frem()
-    print("Dist. venstre:", dist_venstre, "   Dist. bak:", dist_bak, "   Dist. høyre:", dist_hoyre, "   Dist. frem:", dist_frem)
+    dist_left = motor_serial.get_dist_left()
+    dist_behind = motor_serial.get_dist_behind()
+    dist_right = motor_serial.get_dist_right()
+    dist_ahead = motor_serial.get_dist_ahead()
+    print("Dist. left:", dist_left, "   Dist. behind:", dist_behind, "   Dist. right:", dist_right, "   Dist. ahead:", dist_ahead)
 
     # Check if there is an obstacle in the way
 """
@@ -135,7 +135,7 @@ while not motor_serial.shutdown_now :
         turn_robot_random_angle()
 """
     # If there is an obstacle on the right hand side
-    if dist_hoyre < STOP_DISTANCE:
+    if dist_right < STOP_DISTANCE:
         print("Obstacle right hand side, turning left...")
         stop_robot(1)
 
@@ -144,7 +144,7 @@ while not motor_serial.shutdown_now :
         turn_robot_left()
 
     # If there is an obstacle on the left hand side
-    elif dist_venstre < STOP_DISTANCE:
+elif dist_left < STOP_DISTANCE:
         print("Obstacle left hand side, turning right...")
         stop_robot()
 
