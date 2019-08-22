@@ -26,10 +26,10 @@ class IMRTRobotSerial :
         self._mutex = threading.Lock()
 
         # Sonic members
-        self._dist_1 = 255
-        self._dist_2 = 255
-        self._dist_3 = 255
-        self._dist_4 = 255
+        self._dist_left = 255
+        self._dist_behind = 255
+        self._dist_right = 255
+        self._dist_ahead = 255
 
         # Create an event for signaling threads when its time terminate the program
         self._run_event = threading.Event()
