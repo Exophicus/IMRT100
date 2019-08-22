@@ -144,14 +144,11 @@ while not motor_serial.shutdown_now :
         turn_robot_left()
 
     # If there is an obstacle on the left hand side
-elif dist_left < STOP_DISTANCE:
+    elif dist_left < STOP_DISTANCE:
         print("Obstacle left hand side, turning right...")
         stop_robot()
 
         drive_robot(BACKWARDS, 0.5)
-
-        turn_robot_right()
-
 
     else:
         # If there is nothing in front of the robot it continus driving forwards

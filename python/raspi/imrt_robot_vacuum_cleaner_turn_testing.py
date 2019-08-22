@@ -39,7 +39,7 @@ def drive_robot(direction, duration):
 
 def turn_robot_random_angle():
 
-    direction = random.choice([-1,1])
+    direction = random.choice([-1])
     iterations = random.randint(10, 25)
     
     for i in range(iterations):
