@@ -30,21 +30,21 @@ class IMRTRobotSerial :
         self._dist_2 = 255
         self._dist_3 = 255
         self._dist_4 = 255
-        
+
         # Create an event for signaling threads when its time terminate the program
         self._run_event = threading.Event()
         self._run_event.set()
 
         self.shutdown_now = False
         signal.signal(signal.SIGINT, self._shutdown_signal)
-        
+
 
         # Thread for receiving data through serial
         self._rx_thread_ = threading.Thread(target=self._rx_thread)
 
 
 
-        
+
     # Method for opening serial port
     def connect(self, port_name="/dev/ttyACM0"):
         self.serial_port_ = serial.Serial(port_name, baudrate=115200, timeout=3)
@@ -53,7 +53,7 @@ class IMRTRobotSerial :
 
 
 
-    
+
     # Method for starting serial receive thread
     def run(self):
         self._rx_thread_.start()
@@ -81,7 +81,7 @@ class IMRTRobotSerial :
 
     # Method for transmitting commands through serial
     def send_command(self, cmd_1, cmd_2) :
-        
+
         # Here we create and populate the message we want to send to the motor controller
         # Our message will contain the following 10 bytes:
         # [header, cmd1_high, cmd1_low, cmd2_high, cmd2_low, not_used, not_used, checksum_high, checksum_low, newline]
@@ -100,7 +100,7 @@ class IMRTRobotSerial :
         tx_msg[-3] = (crc >> 8) & 0xff      # checksum high
         tx_msg[-2] = (crc) & 0xff           # checksum low
 
-        
+
         # Send message
         self.serial_port_.write(tx_msg)
 
@@ -109,53 +109,53 @@ class IMRTRobotSerial :
 
 
     # Returns latest measurement from distance sensor 1
-    def get_dist_1(self):
-        
+    def get_dist_left(self):
+
         self._mutex.acquire()
         dist = self._dist_1
         self._mutex.release()
-        
+
         return dist
 
 
 
 
     # Returns latest measurement from distance sensor 2
-    def get_dist_2(self):
-        
+    def get_dist_behind(self):
+
         self._mutex.acquire()
         dist = self._dist_2
         self._mutex.release()
-        
+
         return dist
 
 
 
 
     # Returns latest measurement from distance sensor 2
-    def get_dist_3(self):
-        
+    def get_dist_right(self):
+
         self._mutex.acquire()
         dist = self._dist_3
         self._mutex.release()
-        
+
         return dist
 
 
 
 
     # Returns latest measurement from distance sensor 2
-    def get_dist_4(self):
-        
+    def get_dist_ahead(self):
+
         self._mutex.acquire()
         dist = self._dist_4
         self._mutex.release()
-        
+
         return dist
 
 
 
-        
+
     # Thread for receiving serial messages
     # This thread will run concurrently with other threads
     # This particular thread's only job is to listen to incomming messages
@@ -165,7 +165,7 @@ class IMRTRobotSerial :
 
         while self._run_event.is_set() :
             rx_msg = self.serial_port_.readline()
-            
+
             if(len(rx_msg) == self.MSG_SIZE) :
                 crc_calc = self._crc16(rx_msg[0:-3])
                 crc_msg = (rx_msg[-3] & 0xff) << 8 | (rx_msg[-2] & 0xff)
@@ -178,12 +178,12 @@ class IMRTRobotSerial :
                     self._dist_3 = (rx_msg[3] & 0xff)
                     self._dist_4 = (rx_msg[4] & 0xff)
                     self._mutex.release()
-  
+
 
 
         print(__name__ + ": Serial receive thread has finished cleanly")
-        
-        
+
+
 
 
     # Checksum algorithm
@@ -195,7 +195,7 @@ class IMRTRobotSerial :
     def _crc16(data_list) :
         crc = 0x0000;
         POLY = 0x8408
-      
+
 
         if len(data_list) == 0 :
             return (~crc)
@@ -208,10 +208,10 @@ class IMRTRobotSerial :
                 else :
                     crc = crc >> 1
                 byte = byte >> 1
-        
+
         return (crc)
 
-          
+
 
 
 
@@ -221,7 +221,7 @@ def main(argv) :
 
     # Example program
     print("Example program")
-    if len(argv) == 1 : 
+    if len(argv) == 1 :
         port_name = "/dev/ttyACM0"
     else :
         port_name = argv[1]
@@ -234,7 +234,7 @@ def main(argv) :
     if not connected:
         print("Exiting program")
         sys.exit()
-        
+
     # Spin receive thread
     motor_serial.run()
 
@@ -256,6 +256,3 @@ def main(argv) :
 
 if __name__ == '__main__' :
     main(sys.argv)
-
- 
-
