@@ -112,7 +112,7 @@ class IMRTRobotSerial :
     def get_dist_left(self):
 
         self._mutex.acquire()
-        dist = self._dist_1
+        dist = self._dist_left
         self._mutex.release()
 
         return dist
@@ -124,7 +124,7 @@ class IMRTRobotSerial :
     def get_dist_behind(self):
 
         self._mutex.acquire()
-        dist = self._dist_2
+        dist = self._dist_behind
         self._mutex.release()
 
         return dist
@@ -136,7 +136,7 @@ class IMRTRobotSerial :
     def get_dist_right(self):
 
         self._mutex.acquire()
-        dist = self._dist_3
+        dist = self._dist_right
         self._mutex.release()
 
         return dist
@@ -148,7 +148,7 @@ class IMRTRobotSerial :
     def get_dist_ahead(self):
 
         self._mutex.acquire()
-        dist = self._dist_4
+        dist = self._dist_ahead
         self._mutex.release()
 
         return dist
@@ -173,10 +173,10 @@ class IMRTRobotSerial :
 
                 if crc_ok and rx_msg[0] == ord('f'):
                     self._mutex.acquire()
-                    self._dist_1 = (rx_msg[1] & 0xff)
-                    self._dist_2 = (rx_msg[2] & 0xff)
-                    self._dist_3 = (rx_msg[3] & 0xff)
-                    self._dist_4 = (rx_msg[4] & 0xff)
+                    self._dist_left = (rx_msg[1] & 0xff)
+                    self._dist_behind = (rx_msg[2] & 0xff)
+                    self._dist_right = (rx_msg[3] & 0xff)
+                    self._dist_ahead = (rx_msg[4] & 0xff)
                     self._mutex.release()
 
 
